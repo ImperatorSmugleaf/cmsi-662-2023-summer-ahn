@@ -80,7 +80,7 @@ class CartTests(unittest.TestCase):
         myCart.addItems(TEST_SKU_1, 5)
         myCart.addItems(TEST_SKU_2, 10)
         myCart.addItems(TEST_SKU_3, 15)
-        self.assertEquals(myCart.totalCost(myCatalogue), 447.35)
+        self.assertEqual(myCart.totalCost(myCatalogue), 447.35)
 
 
 class CustomerIDTests(unittest.TestCase):
