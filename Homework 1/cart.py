@@ -44,6 +44,9 @@ class CustomerID:
     A class representing the ID of a customer who owns a shopping cart.
     """
     def __init__(self, id):
+        """
+        id: the customer's id
+        """
         self._id = CustomerID.validated(id)
 
     @staticmethod
@@ -64,6 +67,9 @@ class SKU:
     identifier for every distinct item in the catalogue.
     """
     def __init__(self, code):
+        """
+        code: the SKU to be stored
+        """
         self._code = SKU.validated(code)
     
     @staticmethod
@@ -89,6 +95,9 @@ class Quantity:
     A wrapper class for a quantity, which is any positive integer.
     """
     def __init__(self, value):
+        """
+        value: the quantity to be stored
+        """
         self._value = Quantity.validated(value)
 
     @staticmethod
@@ -114,6 +123,11 @@ class Item:
     An item in an online storefront, containing a SKU, description, and price.
     """
     def __init__(self, sku, description, price):
+        """
+        sku: a valid SKU string
+        description: the description of the item
+        price: the item's price
+        """
         self._sku = SKU.validated(sku)
         self._description = validatedString(description, maxLength=1000)
         self._price = validatedNumber(price, minimum=0.01, maximum=999999999.99)
@@ -141,10 +155,21 @@ class Cart:
     """
     A shopping cart for an online storefront.
     """
-    def __init__(self, customerId):
+    def __init__(self, customerId, catalogue, inventory):
+        """
+        customerId: a valid customer ID string
+        catalogue: a Catalogue
+        inventory: an Inventory
+        """
         self._id = uuid4()
         self._customerId = CustomerID.validated(customerId)
         self._items = Counter()
+        if type(catalogue) is not Catalogue:
+            raise TypeError("Expected Catalogue")
+        if type(inventory) is not Inventory:
+            raise TypeError("Expected Inventory")
+        self._catalogue = catalogue
+        self._inventory = inventory
 
     def id(self):
         """
@@ -164,14 +189,14 @@ class Cart:
         """
         return deepcopy(self._items)
     
-    def addItems(self, sku, quantity, catalogue, inventory):
+    def addItems(self, sku, quantity):
         """
         Adds one or more instances of an item to the shopping cart. The item
         must exist in the given catalogue and be in stock in the given inventory.
         """
         SKU.validated(sku)
-        catalogue.validateHas(sku)
-        inventory.validateInStock(sku)
+        self._catalogue.validateHas(sku)
+        self._inventory.validateInStock(sku)
         Quantity.validated(quantity)
         self._items[sku] += quantity
 
@@ -182,14 +207,14 @@ class Cart:
         SKU.validated(sku)
         del self._items[sku]
 
-    def updateItemQuantity(self, sku, quantity, catalogue, inventory):
+    def updateItemQuantity(self, sku, quantity):
         """
         Sets the quantity of an item in the shopping cart. The item must exist
         in the given catalogue and be in stock in the given inventory.
         """
         SKU.validated(sku)
-        catalogue.validateHas(sku)
-        inventory.validateInStock(sku)
+        self._catalogue.validateHas(sku)
+        self._inventory.validateInStock(sku)
         Quantity.validated(quantity)
         self._items[sku] = quantity
 
@@ -209,6 +234,9 @@ class Catalogue:
     An index of every item in the online storefront which possesses an SKU.
     """
     def __init__(self, items):
+        """
+        items: an iterable of Items or CatalogItem namedtuples.
+        """
         self._items = dict()
         try:
             iter(items)
@@ -242,6 +270,9 @@ class Inventory:
     An inventory, which tracks the stock of each item. 
     """
     def __init__(self, items):
+        """
+        items: an iterable of InventoryItem namedtuples.
+        """
         self._items = Counter()
         try:
             iter(items)
