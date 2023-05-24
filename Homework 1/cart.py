@@ -11,12 +11,12 @@ def validatedString(toCheck, *, maxLength=1000):
     Ensures that a given value is a string with a length no greater than
     maxLength, and returns the validated string if it passes the validation.
     """
-
     if type(toCheck) is not str:
         raise TypeError("Value must be a string")
     if len(toCheck) > maxLength:
         raise ValueError(f'Length of value cannot be longer than {maxLength}')
     return toCheck
+
 
 def validatedNumber(toCheck, *, minimum=1, maximum=float('inf')):
     """
@@ -24,7 +24,6 @@ def validatedNumber(toCheck, *, minimum=1, maximum=float('inf')):
     number) and that it exists within the given bounds. If the value
     passes the checks, it is returned.
     """
-
     if type(toCheck) is not int and type(toCheck) is not float:
         raise TypeError("Value must be a real number")
     if type(minimum) is not int and type(minimum) is not float:
@@ -39,11 +38,11 @@ def validatedNumber(toCheck, *, minimum=1, maximum=float('inf')):
         raise ValueError(f'Value cannot be greater than {maximum}')
     return toCheck
 
+
 class CustomerID:
     """
     A class representing the ID of a customer who owns a shopping cart.
     """
-
     def __init__(self, id):
         self._id = CustomerID.validated(id)
 
@@ -57,6 +56,7 @@ class CustomerID:
         if regex.match(r'^\p{L}{3}\d{5}\p{L}{2}-[AQ]$', id) is None:
             raise ValueError("Customer ID must be formatted correctly")
         return id
+
 
 class SKU:
     """
@@ -83,6 +83,7 @@ class SKU:
         """
         return self._code
 
+
 class Quantity:
     """
     A wrapper class for a quantity, which is any positive integer.
@@ -106,6 +107,7 @@ class Quantity:
         Getter method for the stored quantity.
         """
         return self._value
+
 
 class Item:
     """
@@ -133,6 +135,7 @@ class Item:
         Getter method for the item's price.
         """
         return self._price
+
 
 class Cart:
     """
@@ -200,6 +203,7 @@ class Cart:
             total += catalogue.lookup(sku).price * amount_in_cart
         return total
 
+
 class Catalogue:
     """
     An index of every item in the online storefront which possesses an SKU.
@@ -231,6 +235,7 @@ class Catalogue:
         if sku not in self._items:
             raise ValueError(f'No item with SKU {sku} found in catalogue')
         return sku
+
 
 class Inventory:
     """
