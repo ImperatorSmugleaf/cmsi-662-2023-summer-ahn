@@ -1,3 +1,8 @@
+"""
+Author: Kieran Ahn
+Last updated: 5/24/2023
+"""
+
 from collections import Counter, namedtuple
 from copy import deepcopy
 from uuid import uuid4
