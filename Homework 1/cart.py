@@ -260,17 +260,31 @@ class Inventory:
         del self._items[sku]
 
     def addItem(self, sku, quantity):
+        """
+        Adds an item to the inventory.
+        """
         self._items[SKU.validated(sku)] += Quantity.validated(quantity)
 
     def subtractItem(self, sku, quantity):
+        """
+        Removes a quantity from the current stock of an item.
+        """
         if Quantity.validated(quantity) > self._items[SKU.validated(sku)]:
             raise ValueError("Cannot subtract quantity from item greater than current stock")
         self._items[sku] -= quantity
 
     def setItemStock(self, sku, quantity):
+        """
+        Sets an item's stock to the given quantity.
+        """
         self._items[SKU.validated(sku)] = Quantity.validated(quantity)
 
     def validateInStock(self, sku, quantity=1):
+        """
+        Checks if the item exists in the inventory and there is enough of that
+        item in stock that the requested quantity can be added to the user's
+        cart.
+        """
         if not (sku in self._items and self._items[sku] != 0):
             raise ValueError("Item not in stock")
         if self._items[sku] < Quantity.validated(quantity):
