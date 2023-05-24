@@ -12,11 +12,11 @@ TEST_INVENTORY = Inventory([InventoryItem(TEST_SKU_1, 10)])
 
 class CartTests(unittest.TestCase):
     def test_init(self):
-        myCart = Cart(TEST_CUSTOMER_ID)
+        myCart = Cart(TEST_CUSTOMER_ID, TEST_CATALOGUE, TEST_INVENTORY)
         self.assertEqual(myCart._customerId, TEST_CUSTOMER_ID)
 
     def test_ids_safety(self):
-        myCart = Cart(TEST_CUSTOMER_ID)
+        myCart = Cart(TEST_CUSTOMER_ID, TEST_CATALOGUE, TEST_INVENTORY)
         myId = myCart.id()
         myCustomerId = myCart.customerId()
         myId = 'a different id'
@@ -25,43 +25,43 @@ class CartTests(unittest.TestCase):
         self.assertNotEqual(myCart._customerId, myCustomerId)
 
     def test_items_safety(self):
-        myCart = Cart(TEST_CUSTOMER_ID)
+        myCart = Cart(TEST_CUSTOMER_ID, TEST_CATALOGUE, TEST_INVENTORY)
         myItems = myCart.items()
         myItems['1234'] = 10
         self.assertNotEqual(myCart._items, myItems)
 
     def test_add_new_item(self):
-        myCart = Cart(TEST_CUSTOMER_ID)
-        myCart.addItems(TEST_SKU_1, 3, TEST_CATALOGUE, TEST_INVENTORY)
+        myCart = Cart(TEST_CUSTOMER_ID, TEST_CATALOGUE, TEST_INVENTORY)
+        myCart.addItems(TEST_SKU_1, 3)
         self.assertDictEqual(myCart._items, Counter({TEST_SKU_1: 3}))
 
     def test_add_additional_items(self):
-        myCart = Cart(TEST_CUSTOMER_ID)
-        myCart.addItems(TEST_SKU_1, 3, TEST_CATALOGUE, TEST_INVENTORY)
-        myCart.addItems(TEST_SKU_1, 2, TEST_CATALOGUE, TEST_INVENTORY)
+        myCart = Cart(TEST_CUSTOMER_ID, TEST_CATALOGUE, TEST_INVENTORY)
+        myCart.addItems(TEST_SKU_1, 3)
+        myCart.addItems(TEST_SKU_1, 2)
         self.assertDictEqual(myCart._items, Counter({TEST_SKU_1: 5}))
 
     def test_remove_item(self):
-        myCart = Cart(TEST_CUSTOMER_ID)
-        myCart.addItems(TEST_SKU_1, 3, TEST_CATALOGUE, TEST_INVENTORY)
+        myCart = Cart(TEST_CUSTOMER_ID, TEST_CATALOGUE, TEST_INVENTORY)
+        myCart.addItems(TEST_SKU_1, 3)
         myCart.removeItem(TEST_SKU_1)
         self.assertDictEqual(myCart._items, Counter())
 
     def test_update_item_quantity(self):
-        myCart = Cart(TEST_CUSTOMER_ID)
-        myCart.addItems(TEST_SKU_1, 3, TEST_CATALOGUE, TEST_INVENTORY)
-        myCart.updateItemQuantity(TEST_SKU_1, 5, TEST_CATALOGUE, TEST_INVENTORY)
+        myCart = Cart(TEST_CUSTOMER_ID, TEST_CATALOGUE, TEST_INVENTORY)
+        myCart.addItems(TEST_SKU_1, 3)
+        myCart.updateItemQuantity(TEST_SKU_1, 5)
         self.assertDictEqual(myCart._items, Counter({TEST_SKU_1: 5}))
 
     def test_cannot_add_item_not_in_catalogue(self):
         with self.assertRaises(ValueError):
-            myCart = Cart(TEST_CUSTOMER_ID)
-            myCart.addItems(TEST_SKU_3, 3, TEST_CATALOGUE, TEST_INVENTORY)
+            myCart = Cart(TEST_CUSTOMER_ID, TEST_CATALOGUE, TEST_INVENTORY)
+            myCart.addItems(TEST_SKU_3, 3)
     
     def test_cannot_add_item_not_in_inventory(self):
         with self.assertRaises(ValueError):
-            myCart = Cart(TEST_CUSTOMER_ID)
-            myCart.addItems(TEST_SKU_2, 3, TEST_CATALOGUE, TEST_INVENTORY)
+            myCart = Cart(TEST_CUSTOMER_ID, TEST_CATALOGUE, TEST_INVENTORY)
+            myCart.addItems(TEST_SKU_2, 3)
 
     def test_item_total_cost(self):
         catalogueItems = set()
@@ -76,10 +76,10 @@ class CartTests(unittest.TestCase):
         inventoryItems.add(InventoryItem(TEST_SKU_3, 30))
         myInventory = Inventory(inventoryItems)
 
-        myCart = Cart(TEST_CUSTOMER_ID)
-        myCart.addItems(TEST_SKU_1, 5, myCatalogue, myInventory)
-        myCart.addItems(TEST_SKU_2, 10, myCatalogue, myInventory)
-        myCart.addItems(TEST_SKU_3, 15, myCatalogue, myInventory)
+        myCart = Cart(TEST_CUSTOMER_ID, myCatalogue, myInventory)
+        myCart.addItems(TEST_SKU_1, 5)
+        myCart.addItems(TEST_SKU_2, 10)
+        myCart.addItems(TEST_SKU_3, 15)
         self.assertEquals(myCart.totalCost(myCatalogue), 447.35)
 
 
