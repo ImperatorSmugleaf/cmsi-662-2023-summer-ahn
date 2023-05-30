@@ -8,6 +8,6 @@ int main() {
     if (islessequal(number, 0.0)) {
         printf("Log function is not defined for zero and below.");
     } else {
-        printf("%lf", log(number));
+        fprintf(stdout, "%lf", log(number));
     }
 }
