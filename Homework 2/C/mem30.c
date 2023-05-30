@@ -8,6 +8,12 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     const size_t rawMessageLength = strlen(argv[1]);
+    
+    if(rawMessageLength > 1000) {
+        printf("Message is too long");
+        return 1;
+    }
+
     const size_t echoLength = rawMessageLength * 3 + 1;
     char* message = (char *)malloc(echoLength);
     
