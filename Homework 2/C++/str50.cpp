@@ -1,3 +1,12 @@
+/*
+ * Author: Kieran Ahn
+ * 
+ * Standard: STR50-CPP. Guarantee that storage for strings has sufficient space
+ * for character data and the null terminator
+ * Description: Following this standard ensures that attackers cannot execute
+ * a buffer overflow attack through the unprotected string.
+ */
+
 #include <iostream>
 #include <string>
 

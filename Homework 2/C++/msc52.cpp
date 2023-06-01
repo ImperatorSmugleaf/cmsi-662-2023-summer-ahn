@@ -1,3 +1,13 @@
+/**
+ * Author: Kieran Ahn
+ * 
+ * Standard: MSC52-CPP. Value-returning functions must return a value from all
+ * exit paths
+ * Description: A function which returns a value must ALWAYS return a value,
+ * because not returning a value leads to unpredictable behaviour which can
+ * be exploited by attackers. 
+ */
+
 #include <iostream>
 #include <string>
 #include <random>
