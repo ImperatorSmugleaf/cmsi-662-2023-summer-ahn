@@ -1,3 +1,12 @@
+/*
+ * Author: Kieran Ahn
+ * 
+ * Standard: FLP32-C. Prevent or detect domain and range errors in math functions
+ * Description: You must always perform bounds checking on any value passed to
+ * a C math function to ensure that it is within the domain of the function,
+ * otherwise it will return bad data.
+ */
+
 #include <math.h>
 #include <stdio.h>
 

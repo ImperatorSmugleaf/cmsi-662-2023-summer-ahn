@@ -1,3 +1,14 @@
+/*
+ * Author: Kieran Ahn 
+ * 
+ * Standard: ERR34-C. Detect errors when converting a string to a number
+ * Description: Always use C standard library functions for converting
+ * from strings to numbers. However, these library functions require
+ * additional checks in order to be secure, which must be handled by
+ * the program calling them. Ensure that no bad values returned from
+ * these functions are exposed.
+ */
+
 #include <errno.h>
 #include <float.h>
 #include <stdlib.h>

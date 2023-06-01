@@ -1,3 +1,13 @@
+/*
+ * Author: Kieran Ahn
+ * 
+ * Standard: MEM30-C. Do not access freed memory
+ * Description: Writing to, double freeing, or otherwise manipulating freed 
+ * memory can cause all sorts of nasty side-effects and errors, such as 
+ * crashes, execution of arbitrary code, data corruption, and more. Never 
+ * access freed memory.
+ */
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
