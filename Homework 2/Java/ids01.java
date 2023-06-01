@@ -1,3 +1,14 @@
+/*
+ * Author: Kieran Ahn
+ * 
+ * Standard: IDS01-J. Normalize strings before validating them
+ * Description: Any application which accepts untrusted string input must 
+ * validate that input first. However, in unicode, the same string can
+ * have multiple different representations. Therefore, in order to ensure
+ * that all representations of malicious strings are caught, you must
+ * normalize all string input before validating it.
+ */
+
 import java.util.Scanner;
 import java.text.Normalizer;
 import java.text.Normalizer.Form;

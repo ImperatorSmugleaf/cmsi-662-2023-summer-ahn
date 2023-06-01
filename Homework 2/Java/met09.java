@@ -1,3 +1,13 @@
+/*
+ * Author: Kieran Ahn
+ * 
+ * Standard: MET09-J. Classes that define an equals() method must also define a
+ * hashCode() method
+ * Description: Java requires that every object which overrides the equals 
+ * method also override the hashCode method, since it is expected that 
+ * two objects which are equivalent will also produce the same hashcode.
+ */
+
 public class met09 {
     public class Cat {
         private String name;

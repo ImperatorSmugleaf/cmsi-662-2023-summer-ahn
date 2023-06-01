@@ -1,3 +1,12 @@
+/*
+ * Author: Kieran Ahn
+ * 
+ * Standard: OBJ01-J. Limit accessibility of fields
+ * Description: If a class exposes a field as public, it presents a potential
+ * attack vector, wherein attackers may be able to manipulate data that they
+ * should not have access to.
+ */
+
 public class obj01 {
     public class Dog {
         private String name;
