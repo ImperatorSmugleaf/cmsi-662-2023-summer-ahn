@@ -11,6 +11,8 @@ typedef struct stringstack {
 StringStack* makeStringStack();
 void push(StringStack* stack, char* newElement);
 char* pop(StringStack* stack);
+void validateCapacity(StringStack* stack);
+void validateSizeNotZero(StringStack* stack);
 
 
 int main() {
