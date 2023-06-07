@@ -74,6 +74,10 @@ public final class StringStack implements Cloneable {
         }
     }
 
+    public int size() {
+        return this.size;
+    }
+
     public Object clone() throws CloneNotSupportedException {
         final StringStack clone = (StringStack) super.clone();
         return clone;
