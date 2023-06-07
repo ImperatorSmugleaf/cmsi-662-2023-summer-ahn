@@ -1,4 +1,3 @@
-import java.util.EmptyStackException;
 import java.util.Objects;
 
 public final class StringStack implements Cloneable {
