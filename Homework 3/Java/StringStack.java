@@ -29,8 +29,9 @@ public final class StringStack implements Cloneable {
 
     public String pop() {
         this.validateSizeNotZero();
-        String topElement = this.frame[this.size - 1];
         this.size--;
+        String topElement = this.frame[this.size];
+        this.frame[this.size] = null;
         return topElement;
     }
 
