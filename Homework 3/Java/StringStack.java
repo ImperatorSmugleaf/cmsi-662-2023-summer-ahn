@@ -14,10 +14,7 @@ public final class StringStack implements Cloneable {
     }
 
     public StringStack(int capacity) {
-        if(capacity < 1) {
-            throw new IllegalArgumentException("StringStack capacity must be greater than 0.");
-        }
-        this.frame = new String[capacity];
+        this.frame = new String[this.validatedCapacity(capacity)];
         this.capacity = 10;
         this.size = 0;
     }
@@ -73,6 +70,18 @@ public final class StringStack implements Cloneable {
         if(this.size == this.capacity) {
             throw new IllegalStateException("Stack is full.");
         }
+    }
+
+    private int validatedCapacity(int capacity) {
+        if(capacity < 2) {
+            throw new IllegalArgumentException("Stack too small.");
+        }
+
+        if (capacity >= Integer.MAX_VALUE) {
+            throw new IllegalArgumentException("Stack too large");
+        }
+
+        return capacity;
     }
 
     public int size() {
