@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public final class StringStack implements Cloneable {
     private static final int DEFAULT_STARTING_CAPACITY = 10;
     private String[] frame;
@@ -53,9 +55,7 @@ public final class StringStack implements Cloneable {
     }
 
     private void validateNotNull(Object toCheck, String type) {
-        if(toCheck == null) {
-            throw new NullPointerException("Expected " + type);
-        }
+        Objects.requireNonNull(toCheck, "Expected " + type + ", not null.");
     }
 
     public Object clone() throws CloneNotSupportedException {
