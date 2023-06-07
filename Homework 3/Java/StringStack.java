@@ -23,10 +23,10 @@ public final class StringStack implements Cloneable {
 
     public void push(String newElement) {
         this.validateNotNull(newElement, "string");
-        this.validateSizeNotZero();
+        this.validateNotFull();
         this.frame[this.size] = newElement;
         this.size++;
-        this.validateCapacity();
+        this.updateCapacity();
     }
 
     public String pop() {
@@ -46,16 +46,32 @@ public final class StringStack implements Cloneable {
         } 
     }
 
-    private void validateCapacity() {
+    private void updateCapacity() {
         if(this.capacity >= this.size) {
-            String[] expandedFrame = new String[this.capacity * 2];
+            int expandedCapacity = this.capacity * 2;
+            String[] expandedFrame = new String[expandedCapacity];
             System.arraycopy(this.frame, 0, expandedFrame, 0, this.capacity);
             this.frame = expandedFrame;
+            this.capacity = expandedCapacity;
+            return;
+        } else if (this.size * 4 <= this.capacity && this.capacity > StringStack.DEFAULT_STARTING_CAPACITY) {
+            int reducedCapacity = this.capacity / 2;
+            String[] reducedFrame = new String[reducedCapacity];
+            System.arraycopy(this.frame, 0, reducedFrame, 0, this.size);
+            this.frame = reducedFrame;
+            this.capacity = reducedCapacity;
+            return;
         }
     }
 
     private void validateNotNull(Object toCheck, String type) {
         Objects.requireNonNull(toCheck, "Expected " + type + ", not null.");
+    }
+
+    private void validateNotFull() {
+        if(this.size == this.capacity) {
+            throw new IllegalStateException("Stack is full.");
+        }
     }
 
     public Object clone() throws CloneNotSupportedException {
