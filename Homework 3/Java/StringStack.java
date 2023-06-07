@@ -1,3 +1,4 @@
+import java.util.EmptyStackException;
 import java.util.Objects;
 
 public final class StringStack implements Cloneable {
@@ -50,14 +51,14 @@ public final class StringStack implements Cloneable {
         if(this.capacity >= this.size) {
             int expandedCapacity = this.capacity * 2;
             String[] expandedFrame = new String[expandedCapacity];
-            System.arraycopy(this.frame, 0, expandedFrame, 0, this.capacity);
+            System.arraycopy(this.frame, 0, expandedFrame, 0, this.frame.length);
             this.frame = expandedFrame;
             this.capacity = expandedCapacity;
             return;
         } else if (this.size * 4 <= this.capacity && this.capacity > StringStack.DEFAULT_STARTING_CAPACITY) {
             int reducedCapacity = this.capacity / 2;
             String[] reducedFrame = new String[reducedCapacity];
-            System.arraycopy(this.frame, 0, reducedFrame, 0, this.size);
+            System.arraycopy(this.frame, 0, reducedFrame, 0, this.frame.length);
             this.frame = reducedFrame;
             this.capacity = reducedCapacity;
             return;
