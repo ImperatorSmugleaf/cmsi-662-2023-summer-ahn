@@ -18,6 +18,8 @@ void stack_destroy(StringStack* stack);
 bool stack_is_empty(StringStack* stack);
 unsigned int validatedCapacity(unsigned int capacity);
 void validateSizeNotZero(StringStack* stack);
+void validateNotFull(StringStack* stack);
 void updateCapacity(StringStack* stack);
+
 
 #endif

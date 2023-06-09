@@ -19,13 +19,16 @@ StringStack* stack_create(unsigned int capacity) {
 }
 
 char* stack_pop(StringStack* stack) {
-    //TODO: check if stack is empty
-    return stack->items[stack->top--];
+    validateSizeNotZero(stack);
+    char* topElement = stack->items[stack->top--];
+    updateCapacity(stack);
+    return topElement;
 }
 
 void stack_push(StringStack* stack, char* newElement) {
+    validateNotFull(stack);
     stack->items[++stack->top] = newElement;
-    //TODO: check if stack exceeds capacity, and update if so
+    updateCapacity(stack);
 }
 
 char* stack_peek(StringStack* stack) {
@@ -48,5 +51,17 @@ void updateCapacity(StringStack* stack) {
     } else if(stack->top + 1 * 4 < stack->capacity) {
         stack->items = realloc(stack->items, sizeof(char*) * stack->capacity / 2);
         stack->capacity = stack->capacity / 2;
+    }
+}
+
+void validateSizeNotZero(StringStack* stack) {
+    if(stack_is_empty(stack)) {
+        exit(STACK_UNDERFLOW);
+    }
+}
+
+void validateNotFull(StringStack* stack) {
+    if(stack->top + 1 == stack->capacity) {
+        exit(STACK_OVERFLOW);
     }
 }
