@@ -1,3 +1,14 @@
+/**
+ * @file stacktests.c
+ * @author Kieran Ahn
+ * @brief Tests for stack.c
+ * @version 0.1
+ * @date 2023-06-09
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #include <assert.h>
 #include <stdio.h>
 #include <limits.h>

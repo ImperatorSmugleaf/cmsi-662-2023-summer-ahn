@@ -1,3 +1,14 @@
+/**
+ * @file stack.h
+ * @author Kieran Ahn
+ * @brief Header file for a stack of strings
+ * @version 0.1
+ * @date 2023-06-09
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #ifndef STACK_H
 #define STACK_H
 

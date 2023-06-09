@@ -1,3 +1,14 @@
+/**
+ * @file stack.c
+ * @author Kieran Ahn
+ * @brief An implementation for a secure, expandable, array-based stack of strings.
+ * @version 0.1
+ * @date 2023-06-09
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
