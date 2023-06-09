@@ -1,6 +1,5 @@
 #include <algorithm>
 #include <iostream>
-#include <memory>
 #include "stack.h"
 
 using namespace std;
@@ -32,15 +31,24 @@ class StringStack {
     }
 
     void growCapacity() {
-        if(this->capacity == this->size) {
+        unsigned int newCapacity = -1;
+        if(this->capacity >= this->size) {
             validateCanGrow();
-            unique_ptr<unique_ptr<string>[]> newFrame(new unique_ptr<string>[this->capacity * 2]);
-            for(int i = 0; i < this->size; i++) {
-                newFrame[i].swap(this->frame[i]);
-            }
-            this->capacity = this->capacity * 2;
-            this->frame.swap(newFrame);
+            unsigned int newCapacity = this->capacity * 2;
+        } else if (this->size * 4 <= this->capacity) {
+            unsigned int newCapacity = this->capacity / 2;
         }
+
+        if(newCapacity == -1) {
+            return;
+        }
+
+        auto newFrame = make_unique<unique_ptr<string>[]>(newCapacity);
+        for(int i = 0; i < this->size; i++) {
+            newFrame[i].swap(this->frame[i]);
+        }
+        this->capacity = newCapacity;
+        this->frame.swap(newFrame);
     }
 
     public:
@@ -70,6 +78,10 @@ class StringStack {
 
     string peek() {
         return *this->frame[this->size-1].get();
+    }
+
+    bool isEmpty() {
+        return this->size==0;
     }
 };
 
