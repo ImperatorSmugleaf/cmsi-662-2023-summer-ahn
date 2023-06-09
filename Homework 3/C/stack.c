@@ -5,15 +5,14 @@
 
 #define STACK_UNDERFLOW -1
 #define STACK_OVERFLOW -2
+#define INVALID_CAPACITY -3
+#define STACK_CAPACITY_EXCEEDED -4
 
-int main() {
-    return 0;
-}
-
-StringStack* stack_create(unsigned int capacity) {
+StringStack* stack_create(int capacity) {
+    int safeCapacity = validatedCapacity(capacity);
     StringStack* stack = (StringStack*)malloc(sizeof(struct stringstack));
-    stack->items = (char**)malloc(sizeof(char*) * capacity);
-    stack->capacity = validatedCapacity(capacity);
+    stack->items = (char**)malloc(sizeof(char*) * safeCapacity);
+    stack->capacity = validatedCapacity(safeCapacity);
     stack->top = -1;
     return stack;
 }
@@ -45,7 +44,8 @@ void stack_destroy(StringStack* stack) {
 }
 
 void updateCapacity(StringStack* stack) {
-    if(stack->capacity == stack->top + 1) {
+    if(stack->capacity <= stack->top + 1) {
+        validateCanGrow(stack->capacity);
         stack->items = realloc(stack->items, sizeof(char*) * stack->capacity * 2);
         stack->capacity *= 2;
     } else if(stack->top + 1 * 4 < stack->capacity) {
@@ -61,7 +61,20 @@ void validateSizeNotZero(StringStack* stack) {
 }
 
 void validateNotFull(StringStack* stack) {
-    if(stack->top + 1 == stack->capacity) {
+    if(stack->top + 1 >= stack->capacity) {
         exit(STACK_OVERFLOW);
+    }
+}
+
+int validatedCapacity(int capacity) {
+    if(capacity == 0 || capacity < 0) {
+        exit(INVALID_CAPACITY);
+    }
+    return capacity;
+}
+
+void validateCanGrow(int capacity) {
+    if(capacity * 2 <= 0) {
+        exit(STACK_CAPACITY_EXCEEDED);
     }
 }
