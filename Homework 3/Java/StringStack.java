@@ -66,8 +66,9 @@ public final class StringStack implements Cloneable {
     }
 
     public StringStack(int capacity) {
-        this.frame = new String[this.validatedCapacity(capacity)];
-        this.capacity = 10;
+        int safeCapacity = this.validatedCapacity(capacity);
+        this.frame = new String[safeCapacity];
+        this.capacity = safeCapacity;
         this.size = 0;
     }
 
@@ -106,7 +107,7 @@ public final class StringStack implements Cloneable {
     }
 
     public static void main(String[] args) {
-        StringStack myStringStack = new StringStack();
+        StringStack myStringStack = new StringStack(100);
         System.out.println(myStringStack.isEmpty());
         myStringStack.push("Hello");
         myStringStack.push("World!");
