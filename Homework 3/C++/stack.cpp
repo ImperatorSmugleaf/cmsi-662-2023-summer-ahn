@@ -1,7 +1,7 @@
-#include <string>
 #include <algorithm>
 #include <iostream>
 #include <memory>
+#include "stack.h"
 
 using namespace std;
 
