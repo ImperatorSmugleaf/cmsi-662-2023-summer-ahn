@@ -34,7 +34,7 @@ void StringStack::updateCapacity() {
     } else {
         return;
     }
-    
+
     auto newFrame = make_unique<unique_ptr<string>[]>(newCapacity);
     for(int i = 0; i < this->size; i++) {
         newFrame[i].swap(this->frame[i]);
@@ -64,7 +64,9 @@ void StringStack::push(const string newElement) {
 string StringStack::pop() {
     StringStack::validateSizeNotZero();
     size--;
-    return *this->frame[this->size].release();
+    string topElement = *this->frame[this->size].release();
+    StringStack::updateCapacity();
+    return topElement;
 }
 
 string StringStack::peek() {
