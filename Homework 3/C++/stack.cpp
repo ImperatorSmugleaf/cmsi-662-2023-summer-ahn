@@ -30,7 +30,7 @@ class StringStack {
         return capacity;
     }
 
-    void growCapacity() {
+    void updateCapacity() {
         unsigned int newCapacity = -1;
         if(this->capacity >= this->size) {
             validateCanGrow();
@@ -67,7 +67,7 @@ class StringStack {
     void push(const string newElement) {
         this->frame[this->size] = unique_ptr<string>(new string(newElement));
         size++;
-        growCapacity();
+        updateCapacity();
     }
 
     string pop() {
