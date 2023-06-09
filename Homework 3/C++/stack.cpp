@@ -31,10 +31,10 @@ void StringStack::updateCapacity() {
         unsigned int newCapacity = this->capacity * 2;
     } else if (this->size * 4 <= this->capacity) {
         unsigned int newCapacity = this->capacity / 2;
-    }
-    if(newCapacity == -1) {
+    } else {
         return;
     }
+    
     auto newFrame = make_unique<unique_ptr<string>[]>(newCapacity);
     for(int i = 0; i < this->size; i++) {
         newFrame[i].swap(this->frame[i]);
