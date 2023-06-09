@@ -5,7 +5,7 @@ public final class StringStack implements Cloneable {
     private static final int DEFAULT_STARTING_CAPACITY = 10;
     private String[] frame;
     private int capacity;
-    private int top;
+    private int size;
 
     private void validateSizeNotZero() {
         if(this.isEmpty()) {
@@ -15,10 +15,10 @@ public final class StringStack implements Cloneable {
 
     private void updateCapacity() {
         int newCapacity = -1;
-        if(this.capacity >= this.top + 1) {
+        if(this.capacity >= this.size + 1) {
             validateCanGrow();
             newCapacity = this.capacity * 2;
-        } else if (this.top + 1 * 4 <= this.capacity && this.capacity > StringStack.DEFAULT_STARTING_CAPACITY) {
+        } else if (this.size + 1 * 4 <= this.capacity && this.capacity > StringStack.DEFAULT_STARTING_CAPACITY) {
             newCapacity = this.capacity / 2;
         } else {
             return;
@@ -35,7 +35,7 @@ public final class StringStack implements Cloneable {
     }
 
     private void validateNotFull() {
-        if(this.top + 1 >= this.capacity) {
+        if(this.size + 1 >= this.capacity) {
             throw new IllegalStateException("Stack is full.");
         }
     }
@@ -62,42 +62,42 @@ public final class StringStack implements Cloneable {
     public StringStack() {
         this.frame = new String[StringStack.DEFAULT_STARTING_CAPACITY];
         this.capacity = 10;
-        this.top = 0;
+        this.size = 0;
     }
 
     public StringStack(int capacity) {
         this.frame = new String[this.validatedCapacity(capacity)];
         this.capacity = 10;
-        this.top = 0;
+        this.size = 0;
     }
 
     public void push(String newElement) {
         this.validateNotNull(newElement, "string");
         this.validateNotFull();
-        this.frame[this.top] = newElement;
-        this.top++;
+        this.frame[this.size] = newElement;
+        this.size++;
         this.updateCapacity();
     }
 
     public String pop() {
         this.validateSizeNotZero();
-        this.top--;
-        String topElement = this.frame[this.top];
-        this.frame[this.top] = null;
+        this.size--;
+        String topElement = this.frame[this.size];
+        this.frame[this.size] = null;
         this.updateCapacity();
         return topElement;
     }
 
     public String peek() {
-        return this.frame[this.top-1];
+        return this.frame[this.size-1];
     }
 
     public int size() {
-        return this.top;
+        return this.size;
     }
 
     public boolean isEmpty() {
-        return this.top == 0;
+        return this.size == 0;
     }
 
     public Object clone() throws CloneNotSupportedException {
@@ -110,6 +110,7 @@ public final class StringStack implements Cloneable {
         System.out.println(myStringStack.isEmpty());
         myStringStack.push("Hello");
         myStringStack.push("World!");
+        System.out.println(myStringStack.size());
         System.out.println(myStringStack.peek());
         System.out.println(myStringStack.isEmpty());
         var world = myStringStack.pop();
