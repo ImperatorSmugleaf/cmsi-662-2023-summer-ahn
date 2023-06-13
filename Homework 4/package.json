@@ -1,0 +1,12 @@
+{
+    "name": "homework-4",
+    "version": "1.0.0",
+    "description": "Cryptography exercises for homework 4",
+    "main": "aes256cbc.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Kieran Ahn",
+    "license": "ISC",
+    "type": "module"
+}
