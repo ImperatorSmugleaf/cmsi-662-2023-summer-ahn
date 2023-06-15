@@ -10,11 +10,27 @@ const AES_256_CBC = "aes-256-cbc"
 
 const makeCipher = (encryptionSwitch) => {
     const makeBuffers = (key, initializationVector) => {
-        const keyBuffer = Buffer.from(key.normalize(), "utf-8")
-        const initializationVectorBuffer = Buffer.from(
-            initializationVector.normalize(),
-            "utf-8"
-        )
+        let keyBuffer
+        let initializationVectorBuffer
+
+        try {
+            keyBuffer = Buffer.from(key.normalize(), "utf-8")
+        } catch (error) {
+            throw new Error(
+                `Error encoding ${key}. Please ensure all input is valid utf-8 strings.`
+            )
+        }
+
+        try {
+            initializationVectorBuffer = Buffer.from(
+                initializationVector.normalize(),
+                "utf-8"
+            )
+        } catch (error) {
+            throw new Error(
+                `Error encoding ${initializationVector}. Please ensure all input is valid utf-8 strings.`
+            )
+        }
         return [keyBuffer, initializationVectorBuffer]
     }
 
