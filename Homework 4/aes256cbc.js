@@ -6,6 +6,11 @@
 import { createCipheriv, createDecipheriv } from "crypto"
 
 const argv = process.argv.slice(2)
+const encryptionSwitch = argv[0]
+const message = argv[1]
+const key = argv[2]
+const initializationVector = argv[3]
+
 const AES_256_CBC = "aes-256-cbc"
 
 const makeCipher = (encryptionSwitch) => {
@@ -71,19 +76,22 @@ if (argv.length !== 4) {
     )
     process.exit()
 }
-validate(argv[2].length == 32, "Encryption keys must be 32 bytes long.")
-validate(argv[3].length == 16, "Initialization vectors must be 16 bytes long.")
+validate(key.length == 32, "Encryption keys must be 32 bytes long.")
+validate(
+    initializationVector.length == 16,
+    "Initialization vectors must be 16 bytes long."
+)
 
-const { cipher, isEncoding } = makeCipher(argv[0])({
+const { cipher, isEncoding } = makeCipher(encryptionSwitch)({
     algorithm: AES_256_CBC,
-    key: argv[2],
-    initializationVector: argv[3],
+    key: key,
+    initializationVector: initializationVector,
 })
 
-const message = isEncoding
+const encodedMessage = isEncoding
     ? () => {
           let encoding = cipher.update(
-              Buffer.from(argv[1].normalize()),
+              Buffer.from(message.normalize()),
               "utf-8",
               "hex"
           )
@@ -91,9 +99,9 @@ const message = isEncoding
           return encoding
       }
     : () => {
-          let decoding = cipher.update(argv[1], "hex", "utf-8")
+          let decoding = cipher.update(message, "hex", "utf-8")
           decoding += cipher.final("utf-8")
           return decoding
       }
 
-console.log(message())
+console.log(encodedMessage())
