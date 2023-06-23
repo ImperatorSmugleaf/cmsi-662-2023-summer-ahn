@@ -9,20 +9,7 @@ message = "Scaramouche, Scaramouche, will you do the Fandango? 💃🏽"
 N = p * q
 phi = (p - 1) * (q - 1)
 
-# Code from GeeksforGeeks
-def extendedEuclideanAlgorithm(a, b):
-    if a == 0:
-        return b, 0, 1
-    
-    gcd, x1, y1 = extendedEuclideanAlgorithm(b%a, a)
-
-    x = y1 - (b//a) * x1
-    y = x1
-
-    return gcd, x, y
-
-# thanks to help from https://crypto.stackexchange.com/questions/5889/calculating-rsa-private-exponent-when-given-public-exponent-and-the-modulus-fact
-d = extendedEuclideanAlgorithm(e, phi)[1]
+d = pow(e, -1, phi)
 
 # Encrypting
 utf8message = message.encode('utf-8').hex()
