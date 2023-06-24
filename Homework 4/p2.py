@@ -36,7 +36,7 @@ key = "QUARK"
 ciphertext = ""
 for i in range(len(plaintext)):
     encodedLetter = list(cipher.keys())[
-        (cipher[plaintext[i]] + cipher[key[i]]) % 25]
+        (cipher[plaintext[i]] + cipher[key[i]]) % 26]
     if len(key) < len(plaintext):
         key += encodedLetter
     ciphertext += encodedLetter
